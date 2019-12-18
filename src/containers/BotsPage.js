@@ -1,6 +1,7 @@
 import React from "react";
 import BotCollection from "./BotCollection";
 import YourBotArmy from "./YourBotArmy";
+import BotSpecs from "../components/BotSpecs";
 
 const URL = 'https://bot-battler-api.herokuapp.com/api/v1/bots';
 
@@ -12,7 +13,8 @@ export default class BotsPage extends React.Component {
 		this.state = {
 
 			allBots: [],
-			yourBots: []
+			yourBots: [],
+			botToDisplay: null
 
 		};
 
@@ -39,15 +41,31 @@ export default class BotsPage extends React.Component {
 
 		let yourBots = [...this.state.yourBots, bot]
 		this.setState({ yourBots })
-		console.log('bot ENlisted')
 
 	}
 
 	delistBot = (bot) => {
 
-		console.log('bot DElisted')
 		let yourBots =this.state.yourBots.filter(myBot => myBot.id !== bot.id)
 		this.setState({ yourBots })
+
+	}
+
+	displaySpecificBot = (bot) => {
+
+		this.setState({botToDisplay: bot})
+
+	}
+
+	displayAllBots = () => {
+
+		this.setState({botToDisplay: null})
+
+	}
+
+	specificBotDetails = () => {
+
+		return this.state.allBots.find(bot => bot.id === this.state.botToDisplay.id)
 
 	}
 
@@ -59,8 +77,8 @@ export default class BotsPage extends React.Component {
 
 	render() {
 
-		const {allBots, yourBots} = this.state
-		const {enlistBot, delistBot} = this
+		const {allBots, yourBots, botToDisplay} = this.state
+		const {enlistBot, delistBot, displaySpecificBot, displayAllBots} = this
 
 		return (
 
@@ -71,10 +89,19 @@ export default class BotsPage extends React.Component {
 					handleClick={delistBot}
 				/>
 
+				{botToDisplay
+				?
+				< BotSpecs
+					bot={botToDisplay}
+					enlistBot={enlistBot}
+					goBackToAllBots={displayAllBots}
+				/>
+				:
 				< BotCollection
 					allBots={allBots}
-					handleClick={enlistBot}
+					handleClick={displaySpecificBot}
 				/>
+				}
 
 			</div>
 
