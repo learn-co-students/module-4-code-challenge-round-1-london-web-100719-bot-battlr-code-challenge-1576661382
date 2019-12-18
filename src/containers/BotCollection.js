@@ -1,20 +1,48 @@
-import React from "react";
+import React, {Component, Fragment} from "react";
 import BotCard from "../components/BotCard";
+import Sorter from "../components/Sorter";
 
-class BotCollection extends React.Component {
-  //your code here
+export default class BotCollection extends Component {
 
-  render(){
-  	return (
-  	  <div className="ui four column grid">
-    		<div className="row">
-    		  {/*...and here..*/}
-    		  Collection of all bots
-    		</div>
-  	  </div>
-  	);
-  }
+	renderBots = () => {
+
+		return this.props.allBots.map(bot => {
+
+			return (
+
+				< BotCard
+					bot={bot}
+					handleClick={this.props.handleClick}
+					key={bot.id}
+				/>
+
+			)
+
+		})
+
+	}
+
+	render(){
+
+		return (
+
+			<Fragment>
+				< Sorter handleChange={this.props.handleSorting}/>
+
+				<div className="ui four column grid">
+
+					<div className="row">
+					
+						{this.renderBots()}
+					
+					</div>
+
+				</div>
+
+			</Fragment>
+
+		);
+
+	}
 
 };
-
-export default BotCollection;
