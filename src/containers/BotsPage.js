@@ -13,8 +13,10 @@ export default class BotsPage extends React.Component {
 		this.state = {
 
 			allBots: [],
+			sortedBots: [],
 			yourBots: [],
-			botToDisplay: null
+			botToDisplay: null,
+			showBots: ''
 
 		};
 
@@ -69,6 +71,21 @@ export default class BotsPage extends React.Component {
 
 	}
 
+	sortBots = (event) => {
+
+		if (event.target.value === 'all') {
+
+			this.setState({sortedBots: this.state.allBots, showBots: 'all'})
+
+		} else {
+
+			let sortedBots = this.state.allBots.filter(bot => bot.bot_class === event.target.value)
+			this.setState({ sortedBots, showBots: event.target.value })
+
+		}
+
+	}
+
 	componentDidMount() {
 
 		this.fetchAllBots()
@@ -77,8 +94,8 @@ export default class BotsPage extends React.Component {
 
 	render() {
 
-		const {allBots, yourBots, botToDisplay} = this.state
-		const {enlistBot, delistBot, displaySpecificBot, displayAllBots} = this
+		const {allBots, yourBots, botToDisplay, sortedBots, showBots} = this.state
+		const {enlistBot, delistBot, displaySpecificBot, displayAllBots, sortBots} = this
 
 		return (
 
@@ -98,8 +115,9 @@ export default class BotsPage extends React.Component {
 				/>
 				:
 				< BotCollection
-					allBots={allBots}
+					allBots={showBots ? sortedBots : allBots}
 					handleClick={displaySpecificBot}
+					handleSorting={sortBots}
 				/>
 				}
 

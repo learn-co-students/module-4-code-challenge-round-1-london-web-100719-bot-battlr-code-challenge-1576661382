@@ -18,7 +18,6 @@ const BotCard = props => {
     default:
       botType = <div />;
   }
-
   return (
     <div className="ui column">
       <div

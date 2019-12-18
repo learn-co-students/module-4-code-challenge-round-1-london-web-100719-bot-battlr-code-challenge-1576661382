@@ -1,7 +1,8 @@
-import React from "react";
+import React, {Component, Fragment} from "react";
 import BotCard from "../components/BotCard";
+import Sorter from "../components/Sorter";
 
-export default class BotCollection extends React.Component {
+export default class BotCollection extends Component {
 
 	renderBots = () => {
 
@@ -25,15 +26,20 @@ export default class BotCollection extends React.Component {
 
 		return (
 
-			<div className="ui four column grid">
+			<Fragment>
+				< Sorter handleChange={this.props.handleSorting}/>
 
-				<div className="row">
-				
-					{this.renderBots()}
-				
+				<div className="ui four column grid">
+
+					<div className="row">
+					
+						{this.renderBots()}
+					
+					</div>
+
 				</div>
 
-			</div>
+			</Fragment>
 
 		);
 
